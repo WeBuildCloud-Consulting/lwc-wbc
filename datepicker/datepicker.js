@@ -54,11 +54,19 @@ export default class DatePicker extends LightningElement {
     previousMonth() {
         this.dateContext = moment(this.dateContext).subtract(1, 'month');
         this.refreshDateNodes();
+
+        //fire previousMonth event.
+        let event = new CustomEvent('previousmonth');
+        this.dispatchEvent(event);
     }
 
     nextMonth() {
         this.dateContext = moment(this.dateContext).add(1, 'month');
         this.refreshDateNodes();
+
+        //fire nextMonth event.
+        let event = new CustomEvent('nextmonth');
+        this.dispatchEvent(event);
     }
 
     goToday() {
@@ -79,6 +87,11 @@ export default class DatePicker extends LightningElement {
         this.dateContext = moment(date);
         this.lastClass = e.target.className;
         e.target.className = 'selected';
+
+        //fire dateselected event.
+        let event = new CustomEvent('dateselected', {date: this.formattedSelectedDate});
+        this.dispatchEvent(event);
+
     }
 
     refreshDateNodes() {
